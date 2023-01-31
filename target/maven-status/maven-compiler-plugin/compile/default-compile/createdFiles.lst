@@ -1,0 +1,11 @@
+yandexPage\LoginPage.class
+helperMethods\Helper.class
+dataProvider\ConfigReader.class
+yandexPage\MailPage.class
+asserts\Assertions.class
+driver\ChromeWebDriver.class
+driver\Driver.class
+driver\FireFoxWebDriver.class
+driver\EdgeWebDriver.class
+asserts\AssertClass.class
+BasePage\BasePage.class
