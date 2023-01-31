@@ -32,14 +32,11 @@ public class MailPage extends BasePage {
     @FindBy(xpath = "//button[@class='Button2 Button2_pin_circle-circle Button2_view_default Button2_size_l']")
     public WebElement clickSend;
 
-    @FindBy(xpath = "//button[@class='Button2 Button2_view_action Button2_size_m Layout-m__sync--3L1uJ qa-LeftColumn-SyncButton']")
-    public WebElement refresh;
-
     private static final String UNREAD_XPATH = "//a[contains(@class,'is-unread')]//span[@title='%s']";
     @FindBy(xpath = "//a[contains(@class,'is-unread')]")
     public List<WebElement> unreadMessage;
 
-    @FindBy(xpath = "(//a[contains(@class,'is-unread')])[2]")
+    @FindBy(xpath = "(//div//a[contains(@class,'is-unread')])[2]")
     public WebElement clickUnreadMessage;
 
     @FindBy(xpath = "(//div[@class='qa-LeftColumn-FolderNodeContent'])[1]")
@@ -48,8 +45,14 @@ public class MailPage extends BasePage {
     @FindBy(xpath = "(//span[@class='_nb-checkbox-flag _nb-checkbox-normal-flag'])[1]")
     public WebElement clickCheckBo;
 
-    @FindBy(xpath = "//div[@title='Удалить (Delete)']")
+    @FindBy(xpath = "//div[@accesskey='Delete']")//"//body//div//span[contains(text(),'Удалить')]"
     public WebElement clickDelete;
+
+    @FindBy(xpath = "(//div//a[@class='control link link_theme_normal ComposeDoneScreen-Link'])[1]")
+    public WebElement clickSendMessage;
+
+
+
 
     public MailPage clickWriteMessage() {
         new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(10));
@@ -83,10 +86,11 @@ public class MailPage extends BasePage {
         return this;
     }
 
-    public MailPage clickRefresh() {
-        helper.click(refresh);
+    public MailPage clickSendMessageS(){
+        helper.click(clickSendMessage);
         return this;
     }
+
 
     public Integer getUnreadMessageSize() {
         return unreadMessage.size();
@@ -100,7 +104,6 @@ public class MailPage extends BasePage {
         for (int i = 0; i < listOfUnreadTitles.size(); i++) {
             if (listOfUnreadTitles.get(i).getText().contains(str)) {
                 listOfUnreadTitles.get(i).click();
-                helper.click(clickUnreadMessage);
             }
         }
     }
@@ -111,6 +114,7 @@ public class MailPage extends BasePage {
     }
     public MailPage clickMyIncomingMessage() {
         helper.click(clickIncomingMessage);
+        new WebDriverWait(Driver.getDriver(),Duration.ofSeconds(20));
         return this;
     }
     public MailPage clickCheckBox(){
@@ -119,8 +123,10 @@ public class MailPage extends BasePage {
     }
 
     public MailPage clickCheckBoxDelete(){
+      new  WebDriverWait(Driver.getDriver(),Duration.ofSeconds(500));
         helper.click(clickDelete);
         return this;
     }
+
 
 }

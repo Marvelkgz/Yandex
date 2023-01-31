@@ -18,5 +18,4 @@ public abstract class BaseTest {
     protected LoginPage loginPage = new LoginPage();
     protected MailPage mailPage = new MailPage();
     protected Assertions assertions = new Assertions();
-    protected AssertClass assertClass = new AssertClass();
 }

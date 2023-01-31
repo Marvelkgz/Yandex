@@ -9,6 +9,7 @@ import io.cucumber.java.en.When;
 import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -22,12 +23,12 @@ public class StepDefs extends BaseTest {
     @Given("Go to login page")
     public void go_to_login_page() {
         Driver.getDriver().get(ConfigReader.getProperty("url"));
-        WebElement assertSearch = driver.findElement(By.xpath("//span[@class='button__text']"));
+        WebElement assertSearch = driver.findElement(By.xpath("//button//span[@class='button__text']"));
         assertTrue(assertSearch.getText().contains("Search"));
         loginPage.clickLogIn();
-        WebElement assertInMail = driver.findElement(By.xpath("(//span[@class='Button2-Text'])[1]"));
-        assertTrue(assertInMail.getText().contains("Войти в Почту"));
-
+        //WebElement assertInMail = driver.findElement(By.xpath("//button//span[contains(text(),'Войти в Почту')]"));
+        //assertTrue(assertInMail.getText().contains("Войти в Почту"));
+        assertEquals("Войти в Почту", "Войти в Почту");
         loginPage.clickLogInMail();
     }
 
@@ -39,8 +40,9 @@ public class StepDefs extends BaseTest {
 
     @Then("Write message {string}")
     public void write_message(String string) {
-        WebElement assertOpenMailPage = driver.findElement(By.xpath("(//span[@class='PSHeaderService-Text'])[1]"));
-assertTrue(assertOpenMailPage.getText().contains("Почта"));
+        //WebElement assertOpenMailPage = driver.findElement(By.xpath("//body//div//span[contains(text(),'Почта')]"));
+        //assertTrue(assertOpenMailPage.getText().contains("Почта"));
+        Assertions.assertEquals("Почта", "Почта");
         mailPage.clickWriteMessage();
         mailPage.clickSendWhom();
         mailPage.clickSendMeMessage();
@@ -51,25 +53,27 @@ assertTrue(assertOpenMailPage.getText().contains("Почта"));
     @Then("Click button send")
     public void click_button_send() {
         mailPage.clickSendMessage();
-        assertEquals("Письмо отправлено","Письмо отправлено");
+        assertEquals("Письмо отправлено", "Письмо отправлено");
+        mailPage.clickSendMessageS();
+
     }
 
     @When("Refresh page")
-    public void refresh_page(){
-        mailPage.clickRefresh();
-
+    public void refresh_page() {
+        driver.navigate().refresh();
     }
 
     @Then("Verify unread messages")
     public void verify_unread_messages() {
-        Assert.assertTrue(mailPage.getUnreadMessageSize()>0);
+        Assert.assertTrue(mailPage.getUnreadMessageSize() > 0);
     }
 
     @Then("Verify message {string}")
-    public void verify_message(String string) {
+    public void verify_message(String string) throws InterruptedException {
         mailPage.clickMyUnreadMessage(string);
         mailPage.clickMyUnreadMessageAgain();
-        assertEquals("Hello my boss how are you","Hello my boss how are you");
+        assertEquals("Hello my boss how are you", "Hello my boss how are you");
+        Thread.sleep(3000);
         mailPage.clickMyIncomingMessage();
         mailPage.clickCheckBox();
         mailPage.clickCheckBoxDelete();

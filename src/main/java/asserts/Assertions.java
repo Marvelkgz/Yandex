@@ -11,6 +11,9 @@ public class Assertions {
     @FindBy(xpath = "//button[@type='button']")
     public WebElement enterInMail;
 
+    @FindBy(xpath = "//body//div//span[contains(text(),'Почта')]")
+    public WebElement verifyOpenMailPage;
+
 
 
 }
